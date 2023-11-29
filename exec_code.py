@@ -23,6 +23,17 @@ PATH_SEPARATOR = WIN32 and "\\" or "/"
 
 logger = logging.getLogger(__name__)
 
+
+#Execute code if apply
+def extract_code_from_string(code_string):
+    pattern = r"```python(.*?)```"
+    matches = re.search(pattern, code_string, re.DOTALL)
+    if matches:
+        code = matches.group(1).strip()
+        return code
+    else:
+        return None
+    
 def execute_code(
     code: Optional[str] = None,
     timeout: Optional[int] = None,
