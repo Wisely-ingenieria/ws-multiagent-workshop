@@ -120,7 +120,7 @@ def execute_code(
             f".\\{filename}" if WIN32 else filename,
         ]
         if WIN32:
-            logger.warning("SIGALRM is not supported on Windows. No timeout will be enforced.")
+            #logger.warning("SIGALRM is not supported on Windows. No timeout will be enforced.")
             result = subprocess.run(
                 cmd,
                 cwd=work_dir,
@@ -237,58 +237,3 @@ def _cmd(lang):
     if lang in ["ps1"]:
         return "powershell"
     raise NotImplementedError(f"{lang} not recognized in code execution")
-
-# code="""
-# import cv2
-# from tkinter import *
-# from PIL import Image
-# from PIL import ImageTk
-# import threading
-
-# # Function for video streaming
-# def video_stream():
-#     _, frame = video.read()
-#     frame = cv2.flip(frame, 1)
-#     cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-#     for (x, y, w, h) in faces:
-#         cv2.rectangle(cv2image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#     img = Image.fromarray(cv2image)
-#     imgtk = ImageTk.PhotoImage(image=img)
-#     display.imgtk = imgtk
-#     display.configure(image=imgtk)
-#     display.after(10, video_stream)
-
-# def stop():
-#     video.release()
-#     cv2.destroyAllWindows()
-#     window.quit()
-
-# # Load face cascade
-# face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-
-# video = cv2.VideoCapture(0)
-
-# # Root window
-# window = Tk()
-# window.title("Face Detection GUI")
-# window.protocol('WM_DELETE_WINDOW', stop)  # Handle window closing
-
-# # Create a frame for the display image
-# display = Label(window)
-# display.grid(row=0, column=0, columnspan=2)
-
-# # Add stop button
-# stop_button = Button(window, text="Stop", command=stop)
-# stop_button.grid(row=1, column=0, columnspan=2)
-
-# # Start video stream in a separate thread
-# thread = threading.Thread(target=video_stream)
-# thread.start()
-
-# # Start the GUI event loop
-# window.mainloop()
-# """
-
-# execute_code(code,timeout=10000,use_docker=False)
